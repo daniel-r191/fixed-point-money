@@ -1,0 +1,18 @@
+# Compiled binaries, if anyone ever builds a throwaway one
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binaries built with go test -c
+*.test
+
+# Coverage output
+*.out
+
+# Go workspace files
+go.work
+go.work.sum
+
+.DS_Store
