@@ -70,6 +70,28 @@ for _, s := range shares {
 two-to-one, and works for any currency, including ones like JPY that
 have no minor unit at all.
 
+### Tax and discounts
+
+`Mul` multiplies an amount by a rate expressed as a fraction, not a
+float, so an 8.25% tax rate is `num=825, denom=10000` rather than
+`0.0825`. Because the result usually can't be represented exactly in
+minor units, `Mul` takes a `RoundingMode` to say how to resolve the
+remainder:
+
+```go
+price, _ := money.Parse("19.99", money.USD)
+tax, err := price.Mul(825, 10000, money.RoundHalfUp)
+if err != nil {
+	panic(err)
+}
+fmt.Println(tax) // 1.65 USD
+```
+
+`RoundHalfUp` and `RoundHalfEven` round a result exactly halfway
+between two minor units away from zero or to the even one
+(banker's rounding), respectively. `RoundUp` and `RoundDown` always
+round a non-zero remainder away from or toward zero.
+
 ## Currencies
 
 Currency precision differs: USD, EUR, and GBP use 2 decimal places,
@@ -84,9 +106,8 @@ _, err := money.Parse("100.5", money.JPY) // error: JPY has 0 decimal places
 ## Status
 
 Early. The core `Amount` type, parsing, formatting, `Add`/`Sub`/`Cmp`,
-and `Allocate` are here and covered by tests. Multiplication with
-explicit rounding modes, JSON encoding, and a broader currency table
-are not yet.
+`Allocate`, and `Mul` with explicit rounding modes are here and covered
+by tests. JSON encoding and a broader currency table are not yet.
 
 ## License
 
