@@ -103,11 +103,24 @@ supports rather than silently rounding it away:
 _, err := money.Parse("100.5", money.JPY) // error: JPY has 0 decimal places
 ```
 
+## JSON
+
+`Amount` implements `json.Marshaler` and `json.Unmarshaler`, encoding
+as minor units plus a currency code rather than a decimal string:
+
+```go
+data, _ := json.Marshal(money.New(1050, money.USD))
+fmt.Println(string(data)) // {"units":1050,"currency":"USD"}
+```
+
+Unmarshaling looks the code up against the currencies this package
+knows about; an unrecognized code is an error.
+
 ## Status
 
 Early. The core `Amount` type, parsing, formatting, `Add`/`Sub`/`Cmp`,
-`Allocate`, and `Mul` with explicit rounding modes are here and covered
-by tests. JSON encoding and a broader currency table are not yet.
+`Allocate`, `Mul` with explicit rounding modes, and JSON encoding are
+here and covered by tests. A broader currency table is not yet.
 
 ## License
 

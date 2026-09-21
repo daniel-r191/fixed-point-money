@@ -23,3 +23,15 @@ var (
 	KWD = Currency{Code: "KWD", Minor: 3}
 	BHD = Currency{Code: "BHD", Minor: 3}
 )
+
+// byCode looks up one of the currencies above by its ISO 4217 code, so
+// that UnmarshalJSON can turn a code back into a Currency with the
+// right minor-unit precision.
+var byCode = map[string]Currency{
+	USD.Code: USD,
+	EUR.Code: EUR,
+	GBP.Code: GBP,
+	JPY.Code: JPY,
+	KWD.Code: KWD,
+	BHD.Code: BHD,
+}
