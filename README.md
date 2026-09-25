@@ -94,10 +94,11 @@ round a non-zero remainder away from or toward zero.
 
 ## Currencies
 
-Currency precision differs: USD, EUR, and GBP use 2 decimal places,
-JPY uses 0, and KWD and BHD use 3. `Parse` and `String` both respect
-this, and `Parse` rejects input with more precision than the currency
-supports rather than silently rounding it away:
+The package ships with about 75 ISO 4217 currencies. Most use 2 decimal
+places; a handful, like JPY, KRW, and the CFA francs, use 0; a few,
+like KWD, BHD, and the other Gulf dinars, use 3. `Parse` and `String`
+both respect this, and `Parse` rejects input with more precision than
+the currency supports rather than silently rounding it away:
 
 ```go
 _, err := money.Parse("100.5", money.JPY) // error: JPY has 0 decimal places
@@ -119,8 +120,8 @@ knows about; an unrecognized code is an error.
 ## Status
 
 Early. The core `Amount` type, parsing, formatting, `Add`/`Sub`/`Cmp`,
-`Allocate`, `Mul` with explicit rounding modes, and JSON encoding are
-here and covered by tests. A broader currency table is not yet.
+`Allocate`, `Mul` with explicit rounding modes, JSON encoding, and a
+75-currency table are here and covered by tests.
 
 ## License
 
